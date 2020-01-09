@@ -14,7 +14,6 @@ func main() {
 	mux := 	http.NewServeMux()
 	mux.HandleFunc("/dump", dump)
 	mux.HandleFunc("/", dump)
-	mux.HandleFunc("", dump)
 
 	s := &http.Server{Addr: addr,  Handler: mux}
 	fmt.Println("running on ", addr)
