@@ -10,13 +10,17 @@ import (
 	"strings"
 )
 
-const addr = ":5000"
+const (
+	addr = ":5000"
+	v = "v0.0.1"
+)
 
 func main() {
 	mux := 	http.NewServeMux()
 	mux.HandleFunc("/", dump)
 	mux.HandleFunc("/dump", dump)
 	mux.HandleFunc("/env", env)
+	mux.HandleFunc("/version", version)
 
 	s := &http.Server{Addr: addr,  Handler: mux}
 	fmt.Println("running on ", addr)
@@ -39,4 +43,8 @@ func env(w http.ResponseWriter, r *http.Request) {
 		return envs[i] < envs[j]
 	})
 	io.WriteString(w, strings.Join(envs, "\n"))
+}
+
+func version(w http.ResponseWriter, r *http.Request) {
+	io.WriteString(w,v)
 }
