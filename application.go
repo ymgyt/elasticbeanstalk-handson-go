@@ -19,6 +19,7 @@ func main() {
 	mux := 	http.NewServeMux()
 	mux.HandleFunc("/", dump)
 	mux.HandleFunc("/dump", dump)
+	mux.HandleFunc("/env/name", envName)
 	mux.HandleFunc("/env", env)
 	mux.HandleFunc("/version", version)
 
@@ -35,6 +36,10 @@ func dump(w http.ResponseWriter, r *http.Request){
 		return
 	}
 	w.Write(dump)
+}
+
+func envName(w http.ResponseWriter, r *http.Request) {
+	io.WriteString(w,os.Getenv("ENV"))
 }
 
 func env(w http.ResponseWriter, r *http.Request) {
